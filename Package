@@ -1,0 +1,43 @@
+java.util.Calendarpackage com.example.mycalendarapp;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.CalendarView;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private CalendarView calendarView;
+    private TextView dateDisplay;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        calendarView = findViewById(R.id.calendarView);
+        dateDisplay = findViewById(R.id.date_display);
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String date = (month + 1) + "/" + dayOfMonth + "/" + year; // Month is 0-indexed
+                dateDisplay.setText(date);
+            }
+        });
+
+
+        // Get the current date and set it initially
+        long currentDate = calendarView.getDate();
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.setTimeInMillis(currentDate);
+        int year = cal.get(java.util.Calendar.YEAR);
+        int month = cal.get(java.util.Calendar.MONTH);
+        int dayOfMonth = cal.get(java.util.Calendar.DAY_OF_MONTH);
+        String date = (month + 1) + "/" + dayOfMonth + "/" + year;
+        dateDisplay.setText(date);
+
+    }
+}
